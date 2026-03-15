@@ -1,0 +1,29 @@
+import React from "react";
+
+export default function QuestionCompletionCard({ question, index }: { question: any, index: number }) {
+
+    console.log(question)
+    return (
+        <>
+            <div className="rounded-2xl border border-white/10 overflow-hidden bg-white/[0.03] backdrop-blur-sm mb-2">
+                <div className="mx-10 my-7">
+                    <div>{index + 1} {question.question.question_text} ?</div>
+                    <div className="mt-2">
+                        {
+                            question.question.choices.map((choice: any, index: number) => (
+                                < div className="flex gap-4">
+                                    <input type="radio" name={question.question.question_text} value={choice.choice_id} id="option1" disabled />
+
+                                    <label htmlFor="option1" className={` ${choice.is_correct ? "text-green-500" : !question.choice.is_correct && "text-red-500"} `}>{choice.choice_text}</label>
+                                </div>
+                            ))
+
+                        }
+                    </div>
+
+
+                </div>
+            </div >
+        </>
+    );
+}

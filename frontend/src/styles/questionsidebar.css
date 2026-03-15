@@ -1,0 +1,101 @@
+/* MAIN SIDEBAR */
+.question-sidebar {
+  width: 300px;
+  height: 100vh;
+  padding: 28px 22px;
+  background: #ffffff;
+  border-left: 2px solid black;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.question-sidebar {
+  width: 300px;
+  height: 100vh;
+  padding: 28px 22px;
+  background: #ffffff;
+  border-right: 2px solid black;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* QUESTION ROW */
+.question-item {
+  display: flex;
+  width: 90%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  border: 1px solid black;
+  background: #f9fafb;
+  transition: 0.2s;
+}
+
+.question-item:hover {
+  background: #eef2ff;
+}
+
+/* QUESTION TEXT */
+.question-text {
+  flex: 1;
+  font-size: 14px;
+  color: #374151;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* EDIT DELETE BUTTONS */
+.edit-btn,
+.delete-btn {
+  background: #ffffff;
+  border: 1px solid black;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px 8px;
+  margin-left: 6px;
+  border-radius: 4px;
+  transition: 0.2s;
+}
+
+.edit-btn:hover {
+  background: #dbeafe;
+}
+
+.delete-btn:hover {
+  background: #fee2e2;
+}
+
+/* ADD QUESTION BUTTON */
+.add-question-btn {
+  width: 90%;
+  padding: 12px;
+  margin-top: 16px;
+  background: #dbeafe;
+  border: 2px solid black;
+  border-radius: 6px;
+  color: #1e40af;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.add-question-btn:hover {
+  background: #bfdbfe;
+}
+
+.question-sidebar h3{
+  margin-bottom: 20px;
+  font-size: 20px;      /* increased size */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #374151;       /* darker grey */
+}

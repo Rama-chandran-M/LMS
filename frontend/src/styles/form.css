@@ -1,0 +1,67 @@
+/* FORM CONTAINER */
+form {
+  width: 520px;
+  max-width: 90%;
+  background: #ffffff;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-sizing: border-box;
+}
+
+
+/* FORM TITLE */
+form h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 10px;
+}
+
+/* INPUT FIELDS */
+form input,
+form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid black;
+  border-radius: 6px;
+  font-size: 15px;
+  outline: none;
+  background: #f9fafb;
+  transition: background 0.2s ease;
+  box-sizing: border-box;
+}
+
+/* INPUT FOCUS EFFECT */
+form input:focus,
+form textarea:focus {
+  background: #eef2ff;
+}
+
+/* TEXTAREA SIZE */
+form textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+/* BUTTON */
+form button {
+  margin-top: 10px;
+  padding: 12px;
+  background: #dbeafe;
+  border: 2px solid black;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e40af;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+/* BUTTON HOVER */
+form button:hover {
+  background: #bfdbfe;
+}

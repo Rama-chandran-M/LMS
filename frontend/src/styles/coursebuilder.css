@@ -1,0 +1,74 @@
+.layout {
+  display: flex;
+  height: calc(100vh - 64px);
+  font-family: Arial, sans-serif;
+  background-color: #f8fafc;
+}
+
+
+/* ============================= */
+/* TABLET (<=1024px) */
+/* ============================= */
+
+@media (max-width: 1024px) {
+
+  .left-sidebar {
+    width: 220px;
+  }
+
+  .right-sidebar {
+    width: 220px;
+  }
+
+}
+
+
+/* ============================= */
+/* MOBILE (<=768px) */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+  .layout {
+    flex-direction: column;
+    height: auto;
+  }
+
+  /* Hide sidebars on mobile */
+  .left-sidebar,
+  .right-sidebar {
+    display: none;
+  }
+
+  /* Center form nicely */
+  .form-wrapper {
+    padding: 20px;
+    justify-content: center;
+  }
+
+  .section-form,
+  form {
+    width: 100%;
+    max-width: 500px;
+  }
+
+}
+
+
+/* ============================= */
+/* SMALL MOBILE (<=480px) */
+/* ============================= */
+
+@media (max-width: 480px) {
+
+  .section-form,
+  form {
+    padding: 20px;
+  }
+
+  .section-form h2,
+  form h2 {
+    font-size: 20px;
+  }
+
+}

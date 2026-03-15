@@ -1,0 +1,78 @@
+/* PAGE WRAPPER */
+.course-form-wrapper {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* FORM CARD */
+.course-form {
+  width: 420px;
+  max-width: 90%;
+
+  background: #ffffff;
+  border: 2px solid black;
+  border-radius: 10px;
+
+  padding: 32px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  box-sizing: border-box;
+}
+
+/* TITLE */
+.course-form h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #374151;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* INPUT FIELDS */
+.course-form input {
+  width: 100%;
+  padding: 12px 14px;
+
+  border: 1px solid black;
+  border-radius: 6px;
+
+  font-size: 15px;
+  background: #f9fafb;
+
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* INPUT FOCUS */
+.course-form input:focus {
+  background: #eef2ff;
+}
+
+/* BUTTON */
+.course-form button {
+  margin-top: 8px;
+  padding: 12px;
+
+  background: #dbeafe;
+  border: 2px solid black;
+  border-radius: 6px;
+
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e40af;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* BUTTON HOVER */
+.course-form button:hover {
+  background: #bfdbfe;
+}

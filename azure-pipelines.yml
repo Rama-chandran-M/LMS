@@ -1,0 +1,94 @@
+trigger:
+  branches:
+    include:
+      - main
+
+variables:
+  dockerRegistryServiceConnection: 'azure-registry-service-connection'
+  azureSubscription: 'azure-service-connection'
+  acrLoginServer: 'ramregistry090.azurecr.io'
+  backendImageRepository: 'lms-backend'
+  frontendImageRepository: 'lms-frontend'
+  backendAppName: 'lms-b'
+  frontendAppName: 'lms-f'
+  tag: '$(Build.BuildId)'
+
+stages:
+
+- stage: BuildBackend
+  displayName: 'Build & Push Backend'
+  jobs:
+  - job: Build
+    pool:
+      name: 'default'
+    steps:
+    - task: Docker@2
+      displayName: 'Build & Push Backend Image'
+      inputs:
+        containerRegistry: '$(dockerRegistryServiceConnection)'
+        repository: '$(backendImageRepository)'
+        command: 'buildAndPush'
+        Dockerfile: 'backend/Dockerfile'
+        buildContext: 'backend'
+        tags: |
+          $(tag)
+          latest
+
+- stage: BuildFrontend
+  displayName: 'Build & Push Frontend'
+  dependsOn: []
+  jobs:
+  - job: Build
+    pool:
+      name: 'default'
+    steps:
+    - task: Docker@2
+      displayName: 'Build & Push Frontend Image'
+      inputs:
+        containerRegistry: '$(dockerRegistryServiceConnection)'
+        repository: '$(frontendImageRepository)'
+        command: 'buildAndPush'
+        Dockerfile: 'frontend/Dockerfile'
+        buildContext: 'frontend'
+        tags: |
+          $(tag)
+          latest
+        arguments: '--build-arg REACT_APP_API_URL=$(REACT_APP_API_URL)'
+
+- stage: DeployBackend
+  displayName: 'Deploy Backend to App Service'
+  dependsOn: BuildBackend
+  jobs:
+  - deployment: Deploy
+    pool:
+      name: 'default'
+    environment: 'production'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebAppContainer@1
+            displayName: 'Deploy Backend Container'
+            inputs:
+              azureSubscription: '$(azureSubscription)'
+              appName: '$(backendAppName)'
+              containers: '$(acrLoginServer)/$(backendImageRepository):$(tag)'
+
+- stage: DeployFrontend
+  displayName: 'Deploy Frontend to App Service'
+  dependsOn: BuildFrontend
+  jobs:
+  - deployment: Deploy
+    pool:
+      name: 'default'
+    environment: 'production'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebAppContainer@1
+            displayName: 'Deploy Frontend Container'
+            inputs:
+              azureSubscription: '$(azureSubscription)'
+              appName: '$(frontendAppName)'
+              containers: '$(acrLoginServer)/$(frontendImageRepository):$(tag)'

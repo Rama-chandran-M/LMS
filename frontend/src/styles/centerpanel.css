@@ -1,0 +1,11 @@
+.center-panel {
+  flex: 1;
+  min-height: 100vh;
+  background-color: #ffffff;
+  padding: 40px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: center;   /* horizontal center */
+  align-items: center;       /* vertical center */
+}

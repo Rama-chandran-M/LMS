@@ -1,0 +1,212 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  
+}
+
+enum Role {
+  STUDENT
+  INSTRUCTOR
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  TRUE_FALSE
+}
+
+model User {
+  user_id   String @id @default(uuid())
+  user_role Role   @default(STUDENT)
+  full_name String
+  email     String @unique
+  password  String
+
+  courses_taught      Course[]             @relation("InstructorCourses")
+  enrolled_courses    Enrollment[]         
+  module_completions  ModuleCompletion[]   
+  assessment_attempts AssessmentAttempt[]  
+
+  @@map("users")
+}
+
+model Course {
+  course_id   String   @id @default(uuid())
+  course_name String
+  technology  String
+  created_at  DateTime @default(now())
+
+
+  fk_instructor_id String
+  instructor       User   @relation("InstructorCourses", fields: [fk_instructor_id], references: [user_id], onDelete: Cascade)
+
+  
+  modules           CourseModule[]
+  enrolled_students Enrollment[]  
+  assessment        Assessment?   
+
+  @@map("courses")
+}
+
+model CourseModule {
+  module_id          String   @id @default(uuid())
+  module_title       String
+  module_description String
+
+  
+  fk_course_id  String
+  course        Course   @relation(fields: [fk_course_id], references: [course_id], onDelete: Cascade)
+
+  
+  sections    Section[]
+  completions ModuleCompletion[]  
+
+  @@map("course_modules")
+}
+
+model Section {
+  section_id        String  @id @default(uuid())
+  section_title     String
+  section_content   String?
+  section_images    String?
+  image_description String?
+  content_url       String?
+  url_description   String?
+
+  created_at DateTime @default(now())
+
+  
+  module_id         String
+  module            CourseModule @relation(fields: [module_id], references: [module_id], onDelete: Cascade)
+
+  @@map("sections")
+}
+
+model Enrollment {
+  entrollment_id String   @id @default(uuid())
+  user_id        String
+  course_id      String
+  enrolled_at    DateTime @default(now())
+
+
+  progress       Float    @default(0) 
+
+  
+  student User   @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  course  Course @relation(fields: [course_id], references: [course_id], onDelete: Cascade)
+
+  @@unique([user_id, course_id]) 
+  @@map("enrollments")
+}
+
+
+model ModuleCompletion {
+  completion_id String   @id @default(uuid())
+  user_id       String
+  module_id     String
+  completed_at  DateTime @default(now())
+
+  
+  student User         @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  module  CourseModule @relation(fields: [module_id], references: [module_id], onDelete: Cascade)
+
+  @@unique([user_id, module_id]) 
+  @@map("module_completions")
+}
+
+
+model Assessment {
+  assessment_id   String   @id @default(uuid())
+  title           String
+  description     String?
+  passing_score   Float    @default(50) 
+  created_at      DateTime @default(now())
+
+  
+  fk_course_id    String   @unique  
+  course          Course   @relation(fields: [fk_course_id], references: [course_id], onDelete: Cascade)
+
+  
+  questions Questions[]
+  attempts  AssessmentAttempt[]
+
+  @@map("assessments")
+}
+
+model Questions {
+  question_id   String       @id @default(uuid())
+  question_text String
+  question_type QuestionType @default(MULTIPLE_CHOICE)
+  points        Int          @default(1)
+
+  
+  fk_assessment_id String
+  assessment       Assessment @relation(fields: [fk_assessment_id], references: [assessment_id], onDelete: Cascade)
+
+  
+  choices  QuestionChoice[]  
+  answers  StudentAnswer[]
+
+  @@map("questions")
+}
+
+
+model QuestionChoice {
+  choice_id   String  @id @default(uuid())
+  choice_text String
+  is_correct  Boolean @default(false)
+
+  
+  fk_question_id String
+  question       Questions @relation(fields: [fk_question_id], references: [question_id], onDelete: Cascade)
+
+  
+  student_answers StudentAnswer[]
+
+  @@map("question_choices")
+}
+
+
+model AssessmentAttempt {
+  attempt_id    String   @id @default(uuid())
+  score         Float    @default(0)   
+  passed        Boolean  @default(false)
+  attempted_at  DateTime @default(now())
+
+  fk_user_id       String
+  fk_assessment_id String
+
+  student    User       @relation(fields: [fk_user_id], references: [user_id], onDelete: Cascade)
+  assessment Assessment @relation(fields: [fk_assessment_id], references: [assessment_id], onDelete: Cascade)
+
+  
+  answers StudentAnswer[]
+
+  @@map("assessment_attempts")
+}
+
+
+model StudentAnswer {
+  answer_id     String  @id @default(uuid())
+  text_answer   String? 
+
+
+  fk_attempt_id  String
+  fk_question_id String
+  fk_choice_id   String? 
+
+  attempt  AssessmentAttempt @relation(fields: [fk_attempt_id], references: [attempt_id], onDelete: Cascade)
+  question Questions         @relation(fields: [fk_question_id], references: [question_id], onDelete: Cascade)
+  choice   QuestionChoice?   @relation(fields: [fk_choice_id], references: [choice_id], onDelete: SetNull)
+
+  @@map("student_answers")
+}

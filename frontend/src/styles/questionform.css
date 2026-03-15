@@ -1,0 +1,90 @@
+/* MAIN FORM CONTAINER */
+.question-form {
+  width: 520px;
+  max-width: 90%;
+  background: #ffffff;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+/* HEADINGS */
+.question-form h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+/* INPUT FIELDS */
+.question-form input,
+.question-form select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid black;
+  border-radius: 6px;
+  font-size: 15px;
+  background: #f9fafb;
+  outline: none;
+  transition: 0.2s;
+  box-sizing: border-box;
+}
+
+/* INPUT FOCUS */
+.question-form input:focus,
+.question-form select:focus {
+  background: #eef2ff;
+}
+
+/* OPTIONS SECTION SPACING */
+.question-form select {
+  cursor: pointer;
+}
+
+/* BUTTON */
+.question-form button {
+  margin-top: 10px;
+  padding: 12px;
+  background: #dbeafe;
+  border: 2px solid black;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e40af;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* BUTTON HOVER */
+.question-form button:hover {
+  background: #bfdbfe;
+}
+
+/* OPTIONS GRID */
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* OPTION INPUTS */
+.options-grid input {
+  width: 100%;
+  padding: 12px 14px;
+
+  border: 1px solid black;
+  border-radius: 6px;
+
+  font-size: 14px;
+  background: #f9fafb;
+
+  outline: none;
+}
+
+.options-grid input:focus {
+  background: #eef2ff;
+}
